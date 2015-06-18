@@ -1,0 +1,51 @@
+<head>
+  <title>todo-with-projects</title>
+</head>
+
+<body>
+</body>
+
+<template name="Layout">
+  <h1>It's home page!</h1>
+
+  <form class="new-project" name="create-new-project">
+    <input type="text" name="nameProject" placeholder="Type name of new project" require/>
+    <input type="text" name="colorProject" placeholder="Type hex color" pattern="[0-9a-f]{6}" />
+    <button type="submit" class="submit-form"> submit </button>
+  </form>
+
+  <form class="new-task" name="create-new-task">
+    <input type="text" name="nameTask" placeholder="Type name of new project" require/>
+    <select name="projectId">
+      {{#each projects}}
+        <option value="{{projectName}}">{{projectName}}</option>
+      {{/each}}
+    </select>
+    <button type="submit" class="submit-form"> submit </button>
+  </form>
+
+  {{> yield}}
+</template>
+
+<template name="Home">
+  <ul>
+    {{#each projects}}
+      <li style="border-left: 5px solid #{{projectColor}}">
+        <a href="{{pathFor route='Project' data=project }}">{{projectName}}</a>
+      </li>
+    {{/each}}
+  </ul>
+</template>
+
+<template name="Project">
+  <h1>{{ projectName }}</h1>
+  <a href="{{ pathFor route='Home'}}">go Home</a>
+
+  <ul>
+    {{#each tasks}}
+      <li>
+        {{taskName}}
+      </li>
+    {{/each}}
+  </ul>
+</template>
